@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "start": "static-i18n -l en -i hr -i en ./src/ && cp src/custom.css i18n/ && cp src/app.ts i18n/ && cp src/storeabi.ts i18n/ && cp src/img/* i18n/img/ && cp -R src/locales/ dist/ && concurrently \"npm run tsc:w\" \"parcel ./i18n/index.html\" ",
+    "start": "rm -rf dist && static-i18n -l en -i hr -i en ./src/ && cp src/custom.css i18n/ && cp src/app.ts i18n/ && cp src/storeabi.ts i18n/ && cp src/img/* i18n/img/ && cp -R src/locales/ dist/ && concurrently \"npm run tsc:w\" \"parcel ./i18n/index.html\" ",
     "predeploy": "rm -rf dist && cp -R src dist && static-i18n -l en -i en -o ./dist ./src/ && cp i18n/index.html dist && parcel build ./dist/index.html --public-url ./ && cp CNAME dist/ && cp -R src/locales/ dist/",
     "deploy": "gh-pages -b main -d dist -r git@github.com:anoncms/node.anotedao.com.git"
   },
@@ -21,21 +21,17 @@
   },
   "homepage": "https://github.com/anotedao/store-ui#readme",
   "dependencies": {
-    "@metamask/detect-provider": "github:metamask/detect-provider",
-    "@metamask/sdk": "^0.5.6",
-    "concurrently": "^8.2.0",
-    "jquery": "^3.6.0",
-    "latest-version": "^7.0.0",
-    "parcel": "^2.8.2",
+    "@types/jquery": "^3.5.32",
+    "concurrently": "^9.2.0",
+    "ethers": "5.7.2",
+    "events": "^3.3.0",
+    "jquery": "^3.7.1",
+    "latest-version": "^9.0.0",
+    "parcel": "^2.15.4",
     "static-i18n": "^0.2.1",
-    "typescript": "^5.1.6",
-    "web3": "^4.0.3",
-    "web3-eth-contract": "^4.0.3"
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.16",
-    "ethers": "^5.7.2",
-    "events": "^3.3.0",
     "gh-pages": "^6.3.0",
     "process": "^0.11.10"
   }

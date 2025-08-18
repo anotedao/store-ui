@@ -5,11 +5,36 @@ import { ExternalProvider } from "@ethersproject/providers";
 import $ from 'jquery';
 
 const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
+// const contractAddress = '0xd62E0E2E25270DB6Ba98D77Dd287D275dA6aD6d6';
 
 let signer;
 let provider;
 let contract;
 let accs;
+
+let params = [{
+    chainId: "0x38",
+    rpcUrls: ["https://bsc-dataseed.binance.org"],
+    chainName: "BNB Smart Chain Mainnet",
+    nativeCurrency: {
+        name: "BNB",
+        symbol: "BNB",
+        decimals: 18
+    },
+    blockExplorerUrls: ["https://bscscan.com"]
+}];
+
+let paramsTestnet = [{
+    chainId: "0x88bb0",
+    rpcUrls: ["https://rpc.hoodi.ethpandaops.io"],
+    chainName: "Hoodi",
+    nativeCurrency: {
+        name: "ETH",
+        symbol: "ETH",
+        decimals: 18
+    },
+    blockExplorerUrls: ["https://hoodi.etherscan.io/"]
+}];
 
 declare global {
     interface Window {
@@ -28,20 +53,12 @@ const start = async () => {
         signer = await provider.getSigner();
 
         const { chainId } = await provider.getNetwork();
+        console.log(chainId);
         if (chainId != 56) {
+        // if (chainId != 560048) {
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
-                params: [{
-                    chainId: "0x38",
-                    rpcUrls: ["https://bsc-dataseed.binance.org"],
-                    chainName: "BSC Mainnet",
-                    nativeCurrency: {
-                        name: "BNB",
-                        symbol: "BNB",
-                        decimals: 18
-                    },
-                    blockExplorerUrls: ["https://bscscan.com"]
-                }]
+                params: params
             });
             window.location.href = "./";
         }
@@ -97,13 +114,14 @@ $("#mbtn").on("click", function() {
                     var total = await calculateTotal(amt);
                     var totalBig = ethers.BigNumber.from(parseInt((total * 100)?.toString()));
                     var fee = ethers.BigNumber.from("10000000000000000");
+                    // const options = {value: fee.mul(ethers.BigNumber.from(totalBig)), gasLimit: 3000000, gasPrice: 500000};
                     const options = {value: fee.mul(ethers.BigNumber.from(totalBig))};
-                    console.log(options);
+                    console.log(options.value.toString());
                     var tx = await contract.mintNode(address, options);
                     await tx.wait()
                 } catch (e: any) {
                     console.log(e);
-                    $("#errMsg").html(e.message);
+                    $("#errMsg").html(e.data.message);
                     $("#errMsg").show();
                 }
             }
