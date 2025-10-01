@@ -55,8 +55,8 @@ const start = async () => {
 
         const { chainId } = await provider.getNetwork();
         console.log(chainId);
-        // if (chainId != 56) {
-        if (chainId != 560048) {
+        if (chainId != 56) {
+        // if (chainId != 560048) {
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
                 params: params
