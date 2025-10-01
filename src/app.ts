@@ -5,8 +5,8 @@ import { ExternalProvider } from "@ethersproject/providers";
 import $ from 'jquery';
 
 // const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
-const contractAddress = '0xd62E0E2E25270DB6Ba98D77Dd287D275dA6aD6d6';
-// const contractAddress = '0x156b34d8D8F6a052472fe1E51FFbaBCCDb1433ac';
+// const contractAddress = '0xd62E0E2E25270DB6Ba98D77Dd287D275dA6aD6d6';
+const contractAddress = '0x156b34d8D8F6a052472fe1E51FFbaBCCDb1433ac';
 
 let signer;
 let provider;
@@ -59,7 +59,7 @@ const start = async () => {
         if (chainId != 560048) {
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
-                params: paramsTestnet
+                params: params
             });
             window.location.href = "./";
         }
