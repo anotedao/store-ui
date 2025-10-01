@@ -71,7 +71,7 @@ const start = async () => {
     }
 
     $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
-        $("#nodePrice").val((data.value / 100).toFixed(2));
+        $("#nodePrice").val((data.value / 1000).toFixed(3));
     });
 
     $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
@@ -113,8 +113,8 @@ $("#mbtn").on("click", function() {
                 try {
                     var amt = parseInt(amount?.toString());
                     var total = await calculateTotal(amt);
-                    var totalBig = ethers.BigNumber.from(parseInt((total * 100)?.toString()));
-                    var fee = ethers.BigNumber.from("10000000000000000");
+                    var totalBig = ethers.BigNumber.from(parseInt((total * 1000)?.toString()));
+                    var fee = ethers.BigNumber.from("1000000000000000");
                     // const options = {value: fee.mul(ethers.BigNumber.from(totalBig)), gasLimit: 3000000, gasPrice: 500000};
                     const options = {value: fee.mul(ethers.BigNumber.from(totalBig))};
                     console.log(options.value.toString());
@@ -148,7 +148,7 @@ $("#amount").on("keyup", async function() {
         var amountInt = parseInt(amount?.toString());
         var total = await calculateTotal(amountInt);
 
-        $("#total").html(total.toFixed(2));
+        $("#total").html(total.toFixed(3));
     } else {
         $("#total").html("0.00");
     }
@@ -159,7 +159,7 @@ async function calculateTotal(amountInt) {
     var nodeTier = 0;
 
     await $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
-        nodePrice = data.value / 100;
+        nodePrice = data.value / 1000;
     });
 
     await $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
@@ -179,7 +179,7 @@ async function calculateTotal(amountInt) {
             } else {
                 nodeTier = amountInt;
             }
-            nodePrice += 0.01;
+            nodePrice += 0.001;
         }
     }
 
